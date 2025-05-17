@@ -1,5 +1,4 @@
-// components/Navbar.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -17,6 +16,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
   // Handle scroll effect
   useEffect(() => {
@@ -33,6 +34,26 @@ export default function Navbar() {
   useEffect(() => {
     setIsOpen(false);
   }, [router.asPath]);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen && 
+        mobileMenuRef.current && 
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        mobileButtonRef.current &&
+        !mobileButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <nav 
@@ -58,7 +79,11 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className={`text-base font-medium transition-colors duration-200 hover:text-horizonBlue ${
-                  router.asPath === link.href ? 'text-horizonBlue' : 'text-gray-700'
+                  router.asPath === link.href 
+                    ? 'text-horizonBlue' 
+                    : scrolled 
+                      ? 'text-gray-700' 
+                      : 'md:text-gray-400 text-gray-700'
                 }`}
               >
                 {link.name}
@@ -75,8 +100,9 @@ export default function Navbar() {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
+              ref={mobileButtonRef}
               type="button"
-              className="p-2 rounded-md text-gray-700 hover:text-horizonBlue focus:outline-none"
+              className={`p-2 rounded-md ${scrolled ? 'text-gray-700' : 'text-gray-200'} hover:text-horizonBlue focus:outline-none`}
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? (
@@ -93,6 +119,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -106,7 +133,7 @@ export default function Navbar() {
                   href={link.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
                     router.asPath === link.href
-                      ? 'bg-horizonBlue bg-opacity-10 text-horizonBlue'
+                      ? 'bg-horizonBlue bg-opacity-20 text-horizonBlue'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >

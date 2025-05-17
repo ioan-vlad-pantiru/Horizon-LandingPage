@@ -2,19 +2,53 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 const Contact: React.FC = () => {
-    // Simple local state for form (just to demonstrate controlled inputs)
     const [form, setForm] = useState({ name: "", email: "", message: "" });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{
+        success?: boolean;
+        message?: string;
+    }>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // For now, just log the form or alert (in real site, send to API or use mailto)
-        console.log("Contact Form Submission:", form);
-        alert("Thank you! We will be in touch.");
-        setForm({ name: "", email: "", message: "" });
+        setIsSubmitting(true);
+        setSubmitStatus({});
+        
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                setSubmitStatus({
+                    success: true,
+                    message: "Thank you! Your message has been sent."
+                });
+                setForm({ name: "", email: "", message: "" });
+            } else {
+                setSubmitStatus({
+                    success: false,
+                    message: data.message || "Something went wrong. Please try again."
+                });
+            }
+        } catch (error) {
+            setSubmitStatus({
+                success: false,
+                message: "An error occurred. Please try again later."
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -42,32 +76,50 @@ const Contact: React.FC = () => {
                         name="name"
                         placeholder="Your Name"
                         className="px-4 py-3 rounded bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-horizonBlue"
-                        value={form.name} onChange={handleChange} required
+                        value={form.name} 
+                        onChange={handleChange} 
+                        required
+                        disabled={isSubmitting}
                     />
                     <input
                         type="email"
                         name="email"
                         placeholder="Your Email"
                         className="px-4 py-3 rounded bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-horizonBlue"
-                        value={form.email} onChange={handleChange} required
+                        value={form.email} 
+                        onChange={handleChange} 
+                        required
+                        disabled={isSubmitting}
                     />
                     <textarea
                         name="message"
                         placeholder="Your Message"
                         rows={4}
                         className="px-4 py-3 rounded bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-horizonBlue"
-                        value={form.message} onChange={handleChange} required
+                        value={form.message} 
+                        onChange={handleChange} 
+                        required
+                        disabled={isSubmitting}
                     />
+                    
+                    {submitStatus.message && (
+                        <div className={`p-3 rounded ${submitStatus.success ? 'bg-green-800 text-green-100' : 'bg-red-800 text-red-100'}`}>
+                            {submitStatus.message}
+                        </div>
+                    )}
+                    
                     <button
                         type="submit"
-                        className="bg-horizonBlue hover:bg-horizonBlue/80 text-white font-semibold py-3 px-6 rounded"
+                        className={`bg-horizonBlue hover:bg-horizonBlue/80 text-white font-semibold py-3 px-6 rounded transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                        disabled={isSubmitting}
                     >
-                        Send Message
+                        {isSubmitting ? 'Sending...' : 'Send Message'}
                     </button>
                 </motion.form>
+                
                 {/* Alternatively, provide contact info */}
                 <div className="mt-8 text-center text-gray-400">
-                    or email us at <a href="mailto:info@horizonhud.example" className="text-horizonBlue hover:underline">info@horizonhud.example</a>
+                    or email us at <a href="mailto:contact@horizon-hud.eu" className="text-horizonBlue hover:underline">contact@horizon-hud.eu</a>
                 </div>
             </div>
         </section>

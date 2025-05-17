@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 
 const testimonials = [
-    { quote: "The Horizon HUD completely changed my riding experience. It's like having a co-pilot guiding me!", name: "Alex P." },
-    { quote: "As a safety-conscious rider, I love the real-time hazard alerts. Horizon is a game-changer.", name: "Jordan K." },
-    { quote: "Navigation is so much easier now—I can keep my eyes on the road while following directions.", name: "Samira D." }
+    { quote: "The Horizon HUD completely changed my riding experience. It's like having a co-pilot guiding me!", name: "Daria B." },
+    { quote: "As a safety-conscious rider, I love the real-time hazard alerts. Horizon is a game-changer.", name: "Razvan R." },
+    { quote: "Navigation is so much easier now. I can keep my eyes on the road while following directions.", name: "Nicu B." }
 ];
 
 const Testimonials: React.FC = () => {
@@ -31,7 +31,7 @@ const Testimonials: React.FC = () => {
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
                             <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-horizonBlue mb-2 inline-block" />
-                            <p className="italic mb-4">"{t.quote}"</p>
+                            <p className="italic mb-4">&ldquo;{t.quote}&rdquo;</p>
                             <p className="font-semibold text-horizonBlue">– {t.name}</p>
                         </motion.div>
                     ))}

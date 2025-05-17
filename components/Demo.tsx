@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import Image from "next/image";
 
 const Demo: React.FC = () => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -46,10 +47,12 @@ const Demo: React.FC = () => {
                             <div className="absolute inset-0 bg-black/40"></div>
                             
                             {/* Placeholder image (add your own image path) */}
-                            <img 
+                            <Image
                                 src="/thumbnail.png"
-                                alt="Video thumbnail" 
-                                className="absolute inset-0 w-full h-full object-cover opacity-90"
+                                alt="Video thumbnail"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 80vw"
+                                className="object-cover opacity-90"
                             />
                             
                             {/* Modern play button with hover effects */}
