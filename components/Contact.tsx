@@ -41,6 +41,7 @@ const Contact: React.FC = () => {
                     message: data.message || "Something went wrong. Please try again."
                 });
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             setSubmitStatus({
                 success: false,
