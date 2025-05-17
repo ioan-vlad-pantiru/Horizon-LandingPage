@@ -19,20 +19,30 @@ export default async function handler(
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST, // e.g., 'smtp.gmail.com'
-            port: Number(process.env.EMAIL_PORT) || 587,
-            secure: process.env.EMAIL_SECURE === 'true',
+            host: process.env.EMAIL_HOST,
+            port: Number(process.env.EMAIL_PORT) || 465,
+            secure: process.env.EMAIL_PORT === '465', // true for 465, false for other ports
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASSWORD,
             },
         });
 
+        console.log('SMTP configuration:', {
+            host: process.env.EMAIL_HOST,
+            port: Number(process.env.EMAIL_PORT) || 465,
+            secure: process.env.EMAIL_PORT === '465',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD,
+            }
+        });
+
         // Email content
         const mailOptions = {
-            from: process.env.EMAIL_FROM || 'website@horizon-hud.eu',
+            from: `"${name} via Website" <${process.env.EMAIL_FROM || 'website@horizon-hud.eu'}>`, // Format: "Name <email>"
             to: 'contact@horizon-hud.eu',
-            replyTo: email,
+            replyTo: email, // Important! This makes replies go to the user's email
             subject: `New contact from ${name} via Horizon Website`,
             text: `
 Name: ${name}
@@ -50,7 +60,8 @@ ${message}
         };
 
         // Send the email
-        await transporter.sendMail(mailOptions);
+        const result = await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully:', result.messageId);
 
         return res.status(200).json({ success: true });
     } catch (error) {
