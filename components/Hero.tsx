@@ -6,7 +6,7 @@ const Hero: React.FC = () => {
     return (
         <section className="relative flex items-center justify-center min-h-screen bg-black text-center overflow-hidden">
             {/* Background effect */}
-            <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-10 animate-pulse"></div>
+            <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-90 animate-pulse"></div>
 
             {/* HUD grid overlay effect */}
             <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,0,0,0.3)_1px,transparent_1px)] [background-size:20px_20px] opacity-10"></div>
@@ -42,10 +42,10 @@ const Hero: React.FC = () => {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <Link
-                        href="/preorder"
+                        href="/subscribe"
                         className="bg-horizonBlue hover:bg-horizonBlue/80 text-white font-semibold py-3 px-6 rounded shadow-lg transition"
                     >
-                        Preorder Now
+                        Subscribe Now
                     </Link>
                     <Link
                         href="#demo"

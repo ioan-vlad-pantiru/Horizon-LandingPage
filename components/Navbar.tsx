@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -66,6 +67,14 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
+              <Image
+                  src="/horizon-logo-blue.png"
+                  alt="Horizon Logo"
+                  className="h-16 w-auto "
+                  width={64}
+                  height={64}
+                  priority
+              />
               <span className="text-2xl font-bold text-horizonBlue">
                 Horizon
               </span>
@@ -90,10 +99,10 @@ export default function Navbar() {
               </Link>
             ))}
             <Link 
-              href="/preorder"
+              href="/subscribe"
               className="ml-2 inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-horizonBlue hover:bg-opacity-90 transition-all duration-200"
             >
-              Pre-order
+              Subscribe
             </Link>
           </div>
 
@@ -142,7 +151,7 @@ export default function Navbar() {
               ))}
               <div className="pt-2">
                 <Link
-                  href="/preorder"
+                  href="/subscribe"
                   className="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-horizonBlue hover:bg-opacity-90 transition-all duration-200"
                 >
                   Pre-order

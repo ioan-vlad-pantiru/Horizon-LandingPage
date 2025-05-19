@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 
 const testimonials = [
-    { quote: "The Horizon HUD completely changed my riding experience. It's like having a co-pilot guiding me!", name: "Daria B." },
+    { quote: "I'm really looking forward to seeing how Horizon HUD will transform the riding experience. The idea of having a co-pilot guiding me sounds incredible!", name: "Daria B." },
     { quote: "As a safety-conscious rider, I love the real-time hazard alerts. Horizon is a game-changer.", name: "Razvan R." },
-    { quote: "Navigation is so much easier now. I can keep my eyes on the road while following directions.", name: "Nicu B." }
+    { quote: "I can't wait to use Horizon for navigation. It would be so much easier to keep my eyes on the road while following directions.", name: "Nicu B." }
 ];
 
 const Testimonials: React.FC = () => {

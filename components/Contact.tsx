@@ -19,7 +19,8 @@ const Contact: React.FC = () => {
         setSubmitStatus({});
         
         try {
-            const response = await fetch('/api/contact', {
+            // Change the URL to your PHP script location
+            const response = await fetch('https://horizon-hud.eu/send-email.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,19 +42,25 @@ const Contact: React.FC = () => {
                     message: data.message || "Something went wrong. Please try again."
                 });
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
+        } catch (error: unknown) {
+            // Type guard to ensure error is an Error object
+            const errorMessage = error instanceof Error 
+                ? `${error.name}: ${error.message}` 
+                : 'Unknown error occurred';
+            
             setSubmitStatus({
                 success: false,
-                message: "An error occurred. Please try again later."
+                message: errorMessage
             });
         } finally {
             setIsSubmitting(false);
         }
     };
 
+    // Rest of the component remains the same
     return (
         <section className="bg-gray-900 text-gray-200 py-16 px-6" id="contact">
+            {/* Existing JSX */}
             <div className="max-w-4xl mx-auto">
                 <motion.h2
                     className="text-3xl font-bold mb-8 text-center"
@@ -118,7 +125,6 @@ const Contact: React.FC = () => {
                     </button>
                 </motion.form>
                 
-                {/* Alternatively, provide contact info */}
                 <div className="mt-8 text-center text-gray-400">
                     or email us at <a href="mailto:contact@horizon-hud.eu" className="text-horizonBlue hover:underline">contact@horizon-hud.eu</a>
                 </div>
