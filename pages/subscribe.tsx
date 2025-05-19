@@ -4,7 +4,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import {CheckIcon} from "@heroicons/react/24/solid";
+import { CheckIcon } from "@heroicons/react/24/solid";
+import TermsModal from "@/components/TermsModal";
+import SubscriptionTerms from "@/components/SubscriptionTerms";
 
 const Subscribe: NextPage = () => {
     // State to manage form inputs
@@ -13,7 +15,8 @@ const Subscribe: NextPage = () => {
         email: "",
         phone: "",
         intention: "",
-        linkedin: ""
+        linkedin: "",
+        acceptTerms: false
     });
 
     // State to manage form submission
@@ -22,20 +25,37 @@ const Subscribe: NextPage = () => {
         success?: boolean;
         message?: string;
     }>({});
+    
+    // State to control the terms modal
+    const [showTermsModal, setShowTermsModal] = useState(false);
 
     // Handle form input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Handle checkbox changes
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.checked });
+    };
+
     // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // Validate terms acceptance
+        if (!formData.acceptTerms) {
+            setSubmitStatus({
+                success: false,
+                message: "Please accept the terms and conditions to proceed."
+            });
+            return;
+        }
+        
         setIsSubmitting(true);
         setSubmitStatus({});
 
         try {
-            // You'll need to create this endpoint in your API folder
             const response = await fetch('https://horizon-hud.eu/subscribe.php', {
                 method: 'POST',
                 headers: {
@@ -51,7 +71,14 @@ const Subscribe: NextPage = () => {
                     success: true,
                     message: "Thank you for subscribing to our updates!"
                 });
-                setFormData({ name: "", email: "", phone: "", intention: "", linkedin: "" });
+                setFormData({ 
+                    name: "", 
+                    email: "", 
+                    phone: "", 
+                    intention: "", 
+                    linkedin: "",
+                    acceptTerms: false 
+                });
             } else {
                 setSubmitStatus({
                     success: false,
@@ -59,7 +86,6 @@ const Subscribe: NextPage = () => {
                 });
             }
         } catch (error: unknown) {
-            // Type guard to ensure error is an Error object
             const errorMessage = error instanceof Error 
                 ? `${error.name}: ${error.message}` 
                 : 'Unknown error occurred';
@@ -117,7 +143,6 @@ const Subscribe: NextPage = () => {
             </header>
 
             <main className="py-12 px-6">
-
                 <section className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                     {[
                         { title: "Early-Bird Pricing", desc: "Save 15% off the expected retail price ($599)", icon: <CheckIcon className="h-8 w-8 text-horizonBlue" /> },
@@ -216,6 +241,40 @@ const Subscribe: NextPage = () => {
                                 />
                             </div>
                         )}
+                        
+                        {/* Terms and Conditions Agreement */}
+                        <div className="mt-4 p-4 border border-gray-600 rounded-lg bg-gray-700/50">
+                            <div className="flex items-start space-x-3">
+                                <div className="flex-shrink-0 mt-1">
+                                    <input
+                                        id="acceptTerms"
+                                        name="acceptTerms"
+                                        type="checkbox"
+                                        checked={formData.acceptTerms}
+                                        onChange={handleCheckboxChange}
+                                        required
+                                        className="w-5 h-5 rounded border-gray-600 text-horizonBlue focus:ring-horizonBlue"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="acceptTerms" className="block text-sm font-medium text-gray-200">
+                                        Legal Agreement
+                                    </label>
+                                    <p className="text-xs text-gray-400 mt-1">
+                                        By checking this box, I acknowledge that I have read and agree to the{" "}
+                                        <button 
+                                            type="button"
+                                            onClick={() => setShowTermsModal(true)} 
+                                            className="text-horizonBlue hover:underline font-medium"
+                                        >
+                                            Terms and Conditions
+                                        </button>{" "}
+                                        of Horizon Technologies, including consent to receive product updates and marketing communications. 
+                                        I understand that my information will be processed as described in the Terms.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
                         {submitStatus.message && (
                             <div className={`p-3 rounded ${submitStatus.success ? 'bg-green-800 text-green-100' : 'bg-red-800 text-red-100'}`}>
@@ -240,6 +299,15 @@ const Subscribe: NextPage = () => {
                 </p>
                 <p className="text-xs mt-2">© 2025 Horizon Technologies. All rights reserved.</p>
             </footer>
+            
+            {/* Terms and Conditions Modal */}
+            <TermsModal 
+                isOpen={showTermsModal} 
+                onClose={() => setShowTermsModal(false)}
+                title="Subscription Terms and Conditions"
+            >
+                <SubscriptionTerms />
+            </TermsModal>
         </div>
     );
 };

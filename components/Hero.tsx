@@ -1,10 +1,19 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 const Hero: React.FC = () => {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+    
+    useEffect(() => {
+        // Force scrolling to top when component mounts
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
-        <section className="relative flex items-center justify-center min-h-screen bg-black text-center overflow-hidden">
+        <section ref={ref} className="relative flex items-center justify-center min-h-screen bg-black text-center overflow-hidden">
             {/* Background effect */}
             <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-90 animate-pulse"></div>
 
@@ -17,8 +26,7 @@ const Hero: React.FC = () => {
             <motion.div
                 className="relative z-10 px-6 py-12"
                 initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                 transition={{ duration: 0.8 }}
             >
                 {/* Logo */}
