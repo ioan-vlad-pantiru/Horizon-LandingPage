@@ -166,7 +166,7 @@ export default function Navbar() {
                   href="/subscribe"
                   className="block w-full text-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-horizonBlue hover:bg-opacity-90 transition-all duration-200"
                 >
-                  Pre-order
+                  Subscribe
                 </Link>
               </div>
             </div>
