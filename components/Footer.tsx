@@ -1,4 +1,3 @@
-// components/Footer.tsx
 import Link from 'next/link';
 
 export default function Footer() {
@@ -49,6 +48,16 @@ export default function Footer() {
                   </svg>
                 </a>
               </div>
+            </div>
+            
+            <div className="flex flex-col items-center md:items-start">
+              <h3 className="text-lg font-semibold mb-3">Stay Updated</h3>
+              <Link 
+                href="/subscribe" 
+                className="bg-horizonBlue hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-colors duration-300 flex items-center justify-center"
+              >
+                Subscribe Now
+              </Link>
             </div>
           </div>
         </div>

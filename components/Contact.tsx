@@ -61,7 +61,7 @@ const Contact: React.FC = () => {
     return (
         <section className="bg-gray-900 text-gray-200 py-16 px-6" id="contact">
             {/* Existing JSX */}
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-2xl mx-auto">
                 <motion.h2
                     className="text-3xl font-bold mb-8 text-center"
                     initial={{ opacity: 0, y: 20 }}

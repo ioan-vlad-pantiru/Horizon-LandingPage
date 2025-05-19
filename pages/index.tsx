@@ -14,9 +14,9 @@ const Home: NextPage = () => {
             <Head>
                 <title>Horizon – AI Motorcycle Helmet HUD</title>
                 <meta name="description" content="Horizon is an AI-powered motorcycle helmet heads-up display that enhances your ride with augmented reality." />
-                <link rel="icon" href="/horizon-logo.svg" type="image/svg+xml" />
-                <link rel="apple-touch-icon" href="/horizon-logo.png" />
-                <link rel="shortcut icon" href="/horizon-logo.svg" />
+                <link rel="icon" href="/horizon-logo.ico"/>
+                <link rel="apple-touch-icon" href="/horizon-logo.ico" />
+                <link rel="shortcut icon" href="/horizon-logo.ico" />
             </Head>
 
             {/* Each section imported as a component */}

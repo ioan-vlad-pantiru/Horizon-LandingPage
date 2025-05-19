@@ -21,6 +21,17 @@ export default function Navbar() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
+  // Helper function to check if a navigation link is active
+  const isLinkActive = (href: string, path: string) => {
+    // Exact match
+    if (href === path) return true;
+    
+    // Check if the current path matches the link path (for non-hash links)
+    if (!href.includes('#') && path.startsWith(href) && href !== '/') return true;
+    
+    return false;
+  };
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -89,7 +100,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className={`text-base font-medium transition-colors duration-200 hover:text-horizonBlue ${
-                  router.asPath === link.href 
+                  isLinkActive(link.href, router.asPath)
                     ? 'text-horizonBlue' 
                     : scrolled 
                       ? 'text-gray-700' 
@@ -142,7 +153,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    router.asPath === link.href
+                    isLinkActive(link.href, router.asPath)
                       ? 'bg-horizonBlue bg-opacity-20 text-horizonBlue'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}

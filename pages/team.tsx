@@ -20,7 +20,7 @@ const TeamPage: NextPage = () => {
             <Head>
                 <title>Meet Our Team | Horizon</title>
                 <meta name="description" content="Meet the passionate team behind Horizon - revolutionizing motorcycle navigation and safety." />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/horizon-logo.ico" />
             </Head>
 
             <main>
@@ -66,7 +66,7 @@ const TeamPage: NextPage = () => {
                                 Join the <span className="text-horizonBlue">Horizon</span> Team
                             </h2>
                             <p className="text-gray-300 mb-8">
-                                Passionate about motorcycles and technology? We're always looking for talented individuals to join our mission of making riding safer and more connected.
+                                Passionate about motorcycles and technology? We&#39;re always looking for talented individuals to join our mission of making riding safer and more connected.
                             </p>
                         </motion.div>
                     </div>
