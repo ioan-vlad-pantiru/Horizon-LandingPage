@@ -38,7 +38,7 @@ const teamMembers: TeamMember[] = [
         name: "Pantiru Ioan-Vlad",
         role: "Co-Founder and AI Engineer",
         bio: "Rider for 5+ years and student at UBB Cluj. Co-Founded Horizon to revolutionize the riding experience.",
-        imageUrl: "/team/pantiru-vlad.jpg",
+        imageUrl: "/team/pantiru-vlad.png",
         social: {
             linkedin: "https://linkedin.com/in/ioan-vlad-pantiru",
             github: "https://github.com/Penzero",
@@ -50,7 +50,7 @@ const teamMembers: TeamMember[] = [
         name: "George Dan Cristian",
         role: "Co-founder and Software Engineer",
         bio: "2+ years of experience in software development and student at UBB Cluj. Passionate about creating innovative solutions for riders.",
-        imageUrl: "/team/cristian-george.jpeg",
+        imageUrl: "/team/cristian-george.png",
         social: {
             linkedin: "https://linkedin.com/in/dan-cristian-george-2a000620a",
             // github: "https://github.com/CristiG21"
@@ -64,7 +64,7 @@ const advisors: Advisor[] = [
         name: "Calin Sipos",
         title: "Business Advisor",
         bio: "Software Project Manager with international experience and a Java development background. President of Cluj Startups.",
-        imageUrl: "/team/calin-sipos.jpeg",
+        imageUrl: "/team/calin-sipos.png",
         social: {
             linkedin: "https://www.linkedin.com/in/calin-sipos/"
         }
@@ -74,18 +74,9 @@ const advisors: Advisor[] = [
         name: "Mihai Ionut Suciu",
         title: "Hardware Advisor",
         bio: "Senior Hardware Engineer for 9+ years. Specialist in embedded systems and IoT.",
-        imageUrl: "/team/mihai-suciu.jpg",
+        imageUrl: "/team/mihai-suciu.png",
         social: {
             linkedin: "https://www.linkedin.com/in/mihai-ionut-suciu/",
-        }
-    },
-    {
-        id: 3,
-        name: "Alexandru Kiraly",
-        title: "Hardware Advisor",
-        bio: "PhD in Computer Science and expert in embedded systems. Passionate about IoT and smart devices.",
-        imageUrl: "/team/alexandru-kiraly.jpg",
-        social: {
         }
     },
     {
@@ -93,9 +84,38 @@ const advisors: Advisor[] = [
         name: "Nicu Bocanet",
         title: "Marketing Advisor",
         bio: "13 years of experience in sales and marketing. Expert in business development and strategic partnerships.",
-        imageUrl: "/team/nicu-bocanet.jpeg",
+        imageUrl: "/team/nicu-bocanet.png",
         social: {
             instagram: "https://www.instagram.com/nicubocanet/",
+        }
+    },
+    {
+        id: 3,
+        name: "Alexandru Kiraly",
+        title: "Hardware Advisor",
+        bio: "PhD in Computer Science and expert in embedded systems. Passionate about IoT and smart devices.",
+        imageUrl: "/team/alexandru-kiraly.png",
+        social: {
+        }
+    },
+    {
+        id: 5,
+        name: "Alexandru Luchiian",
+        title: "Solution Advisor",
+        bio: "Innovator in IoT for environmental protection, developing secure smart systems to reduce pollution and share real-time air quality data across Romania.",
+        imageUrl: "/team/alexandru-luchiian.png",
+        social: {
+            linkedin: "https://www.linkedin.com/in/alexandru-luchiian/"
+        }
+    },
+    {
+        id: 6,
+        name: "Bogdan Mursa",
+        title: "AI Development advisor",
+        bio: "AI expert with a Ph.D. in Computer Science and 10+ years of experience leading high-impact projects in AI, LLMs, and HPC.",
+        imageUrl: "/team/bogdan-mursa.png",
+        social: {
+            linkedin: "https://www.linkedin.com/in/bogdan-mursa-65a9a6a0/"
         }
     },
 ];
@@ -125,7 +145,7 @@ const Team: React.FC = () => {
             className="bg-gray-900 rounded-lg overflow-hidden hover:shadow-[0_0_15px_rgba(0,157,255,0.3)] transition-shadow flex flex-col items-center max-w-[300px] w-full mx-auto"
         >
             {/* Image: always 200px wide, card is 250px wide */}
-            <div className="relative max-w-[250px] w-[250px] aspect-[3/4] mx-auto mt-4 bg-gray-800 overflow-hidden rounded">
+            <div className="relative max-w-[250px] w-[250px] aspect-[3/4] mx-auto mt-4  overflow-hidden rounded">
                 <Image
                     src={person.imageUrl}
                     alt={person.name}
@@ -244,7 +264,7 @@ const Team: React.FC = () => {
                     </motion.h2>
                     <div
                         ref={advisorRef}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto justify-items-center"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto justify-items-center"
                     >
                         {advisors.map((advisor, index) =>
                             renderPersonCard(advisor, index, isAdvisorInView)

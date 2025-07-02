@@ -3,8 +3,12 @@ import Navbar from '../components/Navbar'
 import type { AppProps } from 'next/app'
 import Footer from "@/components/Footer";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const router = useRouter();
+    const hideLayout = router.pathname === '/admin';
+
     return (
         <>
             <Head>
@@ -14,9 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <link rel="apple-touch-icon" href="/horizon-logo.ico" />
                 <link rel="shortcut icon" href="/horizon-logo.ico" />
             </Head>
-            <Navbar />
+            {!hideLayout && <Navbar />}
             <Component {...pageProps} />
-            <Footer/>
+            {!hideLayout && <Footer />}
         </>
     )
 }

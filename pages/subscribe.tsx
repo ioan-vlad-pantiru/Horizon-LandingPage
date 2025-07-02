@@ -146,7 +146,7 @@ const Subscribe: NextPage = () => {
                 <section className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                     {[
                         { title: "Early-Bird Pricing", desc: "Save 15% off the expected retail price ($599)", icon: <CheckIcon className="h-8 w-8 text-horizonBlue" /> },
-                        { title: "Priority Shipping", desc: "First production batch ships out in June 2025", icon: <CheckIcon className="h-8 w-8 text-horizonBlue" /> },
+                        { title: "Priority Shipping", desc: "First production batch ships out in mid 2026", icon: <CheckIcon className="h-8 w-8 text-horizonBlue" /> },
                         { title: "Exclusive Updates", desc: "Be the first to receive product news, launch announcements, and insider previews.", icon: <CheckIcon className="h-8 w-8 text-horizonBlue" /> },
                         { title: "Community access", desc: "Connect with fellow early supporters and join exclusive discussions and events.", icon: <CheckIcon className="h-8 w-8 text-horizonBlue" /> },
                     ].map((f) => (
