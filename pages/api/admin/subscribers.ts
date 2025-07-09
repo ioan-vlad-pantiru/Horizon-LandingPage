@@ -5,7 +5,7 @@ interface Subscriber {
     id: number;
     name: string;
     email: string;
-    subscribed_at: string;
+    created_at: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
 
         const [rows] = await connection.execute(
-            'SELECT id, name, email, subscribed_at FROM subscribers ORDER BY subscribed_at DESC'
+            'SELECT id, name, email, created_at FROM subscribers ORDER BY created_at DESC'
         );
 
         const subscribers = rows as Subscriber[];

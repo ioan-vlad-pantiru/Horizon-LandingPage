@@ -43,8 +43,21 @@ yarn-error.log*
 next-env.d.ts
 
 out.zip
+backend.zip
 
 public/Horizon-video.mp4
 out
 
+# backend
+backend/vendor
+
+
+# frontend
+frontend/node_modules
+
+# composer
+composer.lock
+
+# composer
+composer.lock
 
