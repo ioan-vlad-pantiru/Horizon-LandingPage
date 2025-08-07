@@ -14,12 +14,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache Node.js modules
+      - name: Cache npm dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.npm
-            node_modules
+          path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
