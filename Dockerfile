@@ -5,8 +5,7 @@ FROM node:18-slim AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json for dependency installation
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install --production
