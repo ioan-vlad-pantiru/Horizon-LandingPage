@@ -32,5 +32,5 @@ jobs:
         continue-on-error: false
 
       - name: Run tests
-        run: npm test
+        run: npm run test
         continue-on-error: false
