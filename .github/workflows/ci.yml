@@ -2,7 +2,7 @@ name: CI Pipeline
 on: [push, pull_request]
 
 jobs:
-  build-test-lint:
+  build-test-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -13,24 +13,38 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
 
-      - name: Cache npm dependencies
+      - name: Cache Node modules
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Linter
         run: npm run lint
-        continue-on-error: false
 
       - name: Build project
         run: npm run build
-        continue-on-error: false
 
       - name: Run tests
-        run: npm run test
-        continue-on-error: false
+        run: npm test
+
+      - name: Login to Azure
+        if: github.ref == 'refs/heads/main'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build and push Docker image
+        if: github.ref == 'refs/heads/main'
+        run: |
+          az acr build --registry ${{ secrets.AZURE_REGISTRY }} --image app:${{ github.sha }} .
+
+      - name: Deploy to Azure Container Instances
+        if: github.ref == 'refs/heads/main'
+        run: |
+          az container create --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name app-${{ github.sha }} --image ${{ secrets.AZURE_REGISTRY }}.azurecr.io/app:${{ github.sha }}
